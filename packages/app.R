@@ -4,8 +4,8 @@ server <- function(input, output) {
   
   output$table <- renderDataTable({
     input$btn
-    inst <- rownames(installed.packages())
-    data.frame(package=sort(inst))
+    inst <- installed.packages()
+    data.frame(package = inst[  , c(1,3)])
   })
 }
 
