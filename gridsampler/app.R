@@ -8,6 +8,7 @@ rlib <- "/usr/share/R/rlib"
   
 # add custom library with production version on top of libpath
 .libPaths(new = c(rlib, .libPaths()) )
+library(gridsampler)
 
 inst <- rownames(installed.packages())
 if (package %in% inst) {
