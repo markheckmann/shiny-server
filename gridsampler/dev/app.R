@@ -1,3 +1,7 @@
+# dev version of app
+
+library(shiny)
+options(shiny.sanitize.errors = FALSE)
 package <- "gridsampler"
 
 inst <- rownames(installed.packages())
