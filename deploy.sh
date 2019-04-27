@@ -25,3 +25,7 @@ mkdir -p /usr/share/R/rlib  # the production code library. no dev versions
 R -e 'devtools::install_github("markheckmann/gridsampler")'  # latest version
 R -e 'withr::with_libpaths(new = "/usr/share/R/rlib", devtools::install_github("markheckmann/gridsampler", ref = "v0.6"))'
 
+### OpenRepGrid.app ###
+R -e 'devtools::install_github("markheckmann/OpenRepGrid.app")'  # latest version
+R -e 'withr::with_libpaths(new = "/usr/share/R/rlib", devtools::install_github("markheckmann/OpenRepGrid.app", ref = "v0.2"))'
+
