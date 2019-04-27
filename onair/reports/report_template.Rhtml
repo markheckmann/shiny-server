@@ -1,0 +1,175 @@
+<html>
+<head>
+<title>Title</title>
+</head>
+
+<body> 
+
+<!-------------------------------------------------------------------------------------------------->
+<!--                            PREPERATION, FUNCTION LOADING ETC.                                -->
+<!-------------------------------------------------------------------------------------------------->
+
+<!--begin.rcode echo=FALSE, message=FALSE, warning=FALSE
+library(tools)
+library(OpenRepGrid)
+generate_report_do_bertin <- TRUE
+options(width=100)
+
+if (is.null(html_resource_path))
+  html_resource_path <- ""
+end.rcode-->
+
+
+
+<!--begin.rcode echo=FALSE
+# include external css, js and html code inline to make document portable
+#
+inject_inline_code <- function(file) {
+  ext <- tolower(file_ext(file))
+  if (ext == "js") {
+      in.tag <- paste0("<script>")
+      out.tag <- paste0("</script>")
+  } else if (ext == "css") {
+      in.tag <- paste0("<style>")
+      out.tag <- paste0("</style>")
+  } else if (ext == "html") {
+      in.tag <- ""
+      out.tag <- ""
+  } else 
+    stop("included file is no .js, .css or .html file!")
+  l <- readLines(file)
+  cat("<!---------------- code made inline from file", file, "------------------> \n")
+  cat(in.tag, "\n")
+  cat(paste0(l, "\n"))
+  cat(out.tag, "\n\n")
+}
+
+# function to inject the HTML code for the header and the info box
+#
+# id:      id of section
+# header:   section header shown
+# infofile: path to HTML infofile to dislay (optional)
+#
+inject_info <- function(id, header, infofile="") {
+  extra.info <- infofile != ""
+  cat("<div>\n")
+    cat (paste0('\t<a id=\"', id, '\"></a>\n') )     # anchor for reference
+    cat( paste0('\t<p class="alignleft">', header, '</p>\n') )    # name of header
+    if (extra.info)
+      cat( '\t<p class="alignright">',
+          paste0('<a id="toggle-', id, '-info"'),
+          paste0('href="javascript:toggleAndChangeText(\'', id, '-info\');\">'),
+                 'Info &#9660</a> </p>\n')
+  cat('</div>\n')
+  cat('<div style="clear: both;"></div>\n')
+  if (extra.info) {
+    cat(paste0('<div id="', id, '-info" class="mycoll">\n'))
+      inject_inline_code(infofile)
+    cat('</div>\n')    
+  }
+}
+
+end.rcode-->
+
+
+<!--begin.rcode echo=FALSE, results='asis', warning=FALSE
+# make all external css and js files inline for portability
+inject_inline_code(paste0(html_resource_path, "/css/bootstrap-responsive.min.css"))
+inject_inline_code(paste0(html_resource_path, "/css/bootstrap.min.css"))
+inject_inline_code(paste0(html_resource_path, "/css/style.css"))
+inject_inline_code(paste0(html_resource_path, "/js/jquery.min.js"))
+inject_inline_code(paste0(html_resource_path, "/js/bootstrap.min.js"))
+inject_inline_code(paste0(html_resource_path, "/js/js.js"))
+end.rcode-->
+
+<!-------------------------------------------------------------------------------------------------->
+<!--                                          LEFT SIDEBAR                                        -->
+<!-------------------------------------------------------------------------------------------------->
+
+<ul class="nav nav-list span3 sidebar-nav-fixed">
+  <li class="nav-header">Analysis sections</li>
+  <li><a href="#bertin">Bertin</a></li>
+  <li><a href="#biplot">Biplot</a></li>
+  <li><a href="#test">Test</a></li>
+</ul>
+
+<!-------------------------------------------------------------------------------------------------->
+<!--                                   DOCUMENT GENERATION                                        -->
+<!-------------------------------------------------------------------------------------------------->
+
+<div class="span10 offset3">
+
+Report generated: <!--rinline I(date()) -->
+
+<hr>
+
+<!--- Bertin --->
+
+<!--begin.rcode bertin_info, echo=FALSE, results='asis', warning=FALSE
+inject_info("bertin", "Bertin", paste0(html_resource_path, "/info/bertin.html"))
+end.rcode-->
+
+<!--begin.rcode bertin_out, echo=FALSE, eval=generate_report_do_bertin
+bertin(x, showvalues=bertin.showvalues,
+       cex.elements=bertin.cex.all, 
+       cex.constructs=bertin.cex.all, 
+       cex.text=bertin.cex.all,
+       colors=bertin.colors,
+       ylim=bertin.ylim)
+end.rcode-->
+
+<hr>
+
+<!--- Biplot --->
+
+<!--begin.rcode biplot_info, echo=FALSE, results='asis', warning=FALSE
+inject_info("biplot", "Biplot", paste0(html_resource_path, "/info/biplot.html"))
+end.rcode-->
+
+<!--begin.rcode biplot_out, echo=FALSE, eval=generate_report_do_biplots_12, fig.height=biplot_12_plotsize / 72, fig.width=biplot_12_plotsize / 72
+if (bipots.12.dim[1] == bipots.12.dim[2]) {
+      plot.new()
+      text(.5, .5, "dimensions can not be identical", cex=1.2)
+  } else {
+        biplot2d(x, 
+                 g=input$biplot_12_g, 
+                 dim=bipots.12.dim, 
+                 center=bipots.12.center, 
+                 normalize=bipots.12.normalize,
+                 flipaxes=bipots.12.flipaxes, 
+                 e.points.show=bipots.12.e.points.show,
+                 e.labels.show=bipots.12.e.labels.show,
+                 c.labels.show=bipots.12.c.labels.show, 
+                 c.points.show =bipots.12.c.labels.show,
+                 e.label.cex=bipots.12.e.label.cex, 
+                 c.label.cex=bipots.12.c.label.cex,
+                 e.point.cex=bipots.12.e.point.cex,
+                 c.point.cex=bipots.12.c.point.cex,
+                 e.point.col=bipots.12.e.point.col,
+                 e.label.col=bipots.12.e.label.col,
+                 c.point.col=bipots.12.c.point.col,
+                 c.label.col=bipots.12.c.label.col,
+                 mai=c(biplot.12.mai.bottom,
+                       biplot.12.mai.left,
+                       biplot.12.mai.top,
+                       biplot.12.mai.right) / 72,
+                 var.cex=bipots.12.var.cex)
+    }
+end.rcode-->
+
+<!--- Test --->
+
+<!--begin.rcode test_info, echo=FALSE, results='asis', warning=FALSE
+inject_info("test", "Testing")
+end.rcode-->
+
+<!--begin.rcode test_out, echo=FALSE
+constructCor(boeker)
+end.rcode-->
+
+
+</div>
+</body>
+</html>
+
+<!-- knit2html("tmp_html.Rhtml", options=c("base64_images")) -->

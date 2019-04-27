@@ -1,0 +1,139 @@
+<html>
+<head>
+<title>Title</title>
+</head>
+
+<body> 
+
+<!-------------------------------------------------------------------------------------------------->
+<!--                            PREPERATION, FUNCTION LOADING ETC.                                -->
+<!-------------------------------------------------------------------------------------------------->
+
+<!--begin.rcode echo=FALSE, message=FALSE, warning=FALSE
+library(tools)
+library(OpenRepGrid)
+generate_report_do_bertin <- TRUE
+options(width=100)
+end.rcode-->
+
+
+<!--begin.rcode echo=FALSE
+# include external css, js and html code inline to make document portable
+#
+inject_inline_code <- function(file) {
+  ext <- tolower(file_ext(file))
+  if (ext == "js") {
+      in.tag <- paste0("<script>")
+      out.tag <- paste0("</script>")
+  } else if (ext == "css") {
+      in.tag <- paste0("<style>")
+      out.tag <- paste0("</style>")
+  } else if (ext == "html") {
+      in.tag <- ""
+      out.tag <- ""
+  } else 
+    stop("included file is no .js, .css or .html file!")
+  l <- readLines(file)
+  cat("<!---------------- code made inline from file", file, "------------------> \n")
+  cat(in.tag, "\n")
+  cat(paste0(l, "\n"))
+  cat(out.tag, "\n\n")
+}
+
+# function to inject the HTML code for the header and the info box
+#
+# id:      id of section
+# header:   section header shown
+# infofile: path to HTML infofile to dislay (optional)
+#
+inject_info <- function(id, header, infofile="") {
+  extra.info <- infofile != ""
+  cat("<div>\n")
+    cat (paste0('\t<a id=\"', id, '\"></a>\n') )     # anchor for reference
+    cat( paste0('\t<p class="alignleft">', header, '</p>\n') )    # name of header
+    if (extra.info)
+      cat( '\t<p class="alignright">',
+          paste0('<a id="toggle-', id, '-info"'),
+          paste0('href="javascript:toggleAndChangeText(\'', id, '-info\');\">'),
+          'More info &#9660</a> </p>\n')
+  cat('</div>\n')
+  cat('<div style="clear: both;"></div>\n')
+  if (extra.info) {
+    cat(paste0('<div id="', id, '-info" class="mycoll">\n'))
+      inject_inline_code(infofile)
+    cat('</div>\n')    
+  }
+}
+
+end.rcode-->
+
+
+<!--begin.rcode echo=FALSE, results='asis', warning=FALSE
+# make all external css and js files inline for portability
+inject_inline_code("css/bootstrap-responsive.min.css")
+inject_inline_code("css/bootstrap.min.css")
+inject_inline_code("css/style.css")
+inject_inline_code("js/jquery.min.js")
+inject_inline_code("js/bootstrap.min.js")
+inject_inline_code("js/js.js")
+end.rcode-->
+
+<!-------------------------------------------------------------------------------------------------->
+<!--                                          LEFT SIDEBAR                                        -->
+<!-------------------------------------------------------------------------------------------------->
+
+<ul class="nav nav-list span3 sidebar-nav-fixed">
+  <li class="nav-header">Analysis sections</li>
+  <li><a href="#bertin">Bertin</a></li>
+  <li><a href="#biplot">Biplot</a></li>
+  <li><a href="#test">Test</a></li>
+</ul>
+
+<!-------------------------------------------------------------------------------------------------->
+<!--                                   DOCUMENT GENERATION                                        -->
+<!-------------------------------------------------------------------------------------------------->
+
+<div class="span10 offset3">
+
+Report generated: <!--rinline I(date()) -->
+
+<hr>
+
+<!--- Bertin --->
+
+<!--begin.rcode bertin_info, echo=FALSE, results='asis', warning=FALSE
+inject_info("bertin", "Bertin goes here", "info/bertin.html")
+end.rcode-->
+
+<!--begin.rcode bertin_out, echo=FALSE
+bertin(boeker)
+end.rcode-->
+
+<hr>
+
+<!--- Biplot --->
+
+<!--begin.rcode biplot_info, echo=FALSE, results='asis', warning=FALSE
+inject_info("biplot", "Biplot goes here", "info/biplot.html")
+end.rcode-->
+
+<!--begin.rcode biplot_out, echo=FALSE
+biplot2d(boeker)
+end.rcode-->
+
+<!--- Test --->
+
+<!--begin.rcode test_info, echo=FALSE, results='asis', warning=FALSE
+inject_info("test", "Testing")
+end.rcode-->
+
+<!--begin.rcode test_out, echo=FALSE
+constructCor(boeker)
+end.rcode-->
+
+
+</div>
+</body>
+</html>
+
+<!-- knit2html("tmp_html.Rhtml", options=c("base64_images")) -->

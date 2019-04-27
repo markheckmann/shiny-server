@@ -1,0 +1,60 @@
+OpenRepGrid on Air Report 
+========================================================
+**Still experimental**
+
+Generated `r date()`
+
+```{r settings, echo=FALSE, message=FALSE, warning=FALSE}
+library(OpenRepGrid)
+```
+
+```{r bertin_header, echo=FALSE, eval=generate_report_do_bertin, results='asis'}
+cat("*************\n")
+cat("## Bertin")
+```
+
+```{r bertin, echo=FALSE, eval=generate_report_do_bertin}
+bertin(x, showvalues=bertin.showvalues,
+       cex.elements=bertin.cex.all, 
+       cex.constructs=bertin.cex.all, 
+       cex.text=bertin.cex.all,
+       colors=bertin.colors,
+       ylim=bertin.ylim)
+```
+
+
+```{r biplot_12_header, echo=FALSE, eval=generate_report_do_biplots_12, results='asis'}
+cat("*************\n")
+cat("## Biplots")
+```
+
+```{r biplot_12, echo=FALSE, eval=generate_report_do_biplots_12, fig.height=biplot_12_plotsize / 72, fig.width=biplot_12_plotsize / 72}
+if (bipots.12.dim[1] == bipots.12.dim[2]) {
+      plot.new()
+      text(.5, .5, "dimensions can not be identical", cex=1.2)
+  } else {
+        biplot2d(x, 
+                 g=input$biplot_12_g, 
+                 dim=bipots.12.dim, 
+                 center=bipots.12.center, 
+                 normalize=bipots.12.normalize,
+                 flipaxes=bipots.12.flipaxes, 
+                 e.points.show=bipots.12.e.points.show,
+                 e.labels.show=bipots.12.e.labels.show,
+                 c.labels.show=bipots.12.c.labels.show, 
+                 c.points.show =bipots.12.c.labels.show,
+                 e.label.cex=bipots.12.e.label.cex, 
+                 c.label.cex=bipots.12.c.label.cex,
+                 e.point.cex=bipots.12.e.point.cex,
+                 c.point.cex=bipots.12.c.point.cex,
+                 e.point.col=bipots.12.e.point.col,
+                 e.label.col=bipots.12.e.label.col,
+                 c.point.col=bipots.12.c.point.col,
+                 c.label.col=bipots.12.c.label.col,
+                 mai=c(biplot.12.mai.bottom,
+                       biplot.12.mai.left,
+                       biplot.12.mai.top,
+                       biplot.12.mai.right) / 72,
+                 var.cex=bipots.12.var.cex)
+    }
+```
