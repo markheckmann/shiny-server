@@ -1,5 +1,5 @@
-# latest released version of shiny app
-# installed in special R lib
+# latest release version of shiny app
+# installed in custom R lib
 
 library(shiny)
 options(shiny.sanitize.errors = FALSE)
