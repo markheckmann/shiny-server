@@ -2,7 +2,8 @@
 
 # This file installs the packaged shiny apps.
 # Also it will install different package version to 
-# different R libraries
+# different R libraries to host different versions of 
+# each shiny app if needed
 
 # make sure this file has proper execution rights:
 #   sudo -i  # run as root on ubuntu
