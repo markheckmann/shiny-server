@@ -22,5 +22,5 @@ mkdir -p /usr/share/R/rlib  # the production code library. no dev versions
 
 ### gridsampler ###
 R -e 'devtools::install_github("markheckmann/gridsampler")'  # latest version
-R -e 'withr::with_libpaths(new = "/usr/share/R/rlib", devtools::install_github("markheckmann/gridsampler", branch = "v0.5"))'
+R -e 'withr::with_libpaths(new = "/usr/share/R/rlib", devtools::install_github("markheckmann/gridsampler", ref = "v0.5"))'
 
