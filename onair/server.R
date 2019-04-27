@@ -1,6 +1,7 @@
 # sudo scp -r /Users/mark/Documents/_mh/R/pkg_dev/shiny/dev_apps/onair mark@134.102.100.220:~/Dokumente/public_apps
 # sudo cp -a ~/Dokumente/public_apps/ /var/shiny-server/www/
 options(rgl.useNULL=TRUE) 
+options(shiny.sanitize.errors = FALSE)
 
 library(shiny)
 library(rgl)
