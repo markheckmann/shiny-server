@@ -5,8 +5,8 @@
 # different R libraries
 
 # make sure this file has proper execution rights:
-#   sudo chmod a+x deploy.sh
-#   sudo /bin/bash ./deploy.sh
+#   sudo -i  # run as root on ubuntu
+#   /bin/bash ./deploy.sh
 
 
 #-------------------------------------------------
