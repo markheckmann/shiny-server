@@ -1,0 +1,5 @@
+TODO:
+
+fix bug in OpenRepGrid.app
+see
+/var/log/shiny-server# nano openrepgrid.app-shiny-20190427-212357-59093.log

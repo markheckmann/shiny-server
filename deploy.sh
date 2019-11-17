@@ -29,3 +29,6 @@ R -e 'withr::with_libpaths(new = "/usr/share/R/rlib", devtools::install_github("
 R -e 'devtools::install_github("markheckmann/OpenRepGrid.app")'  # latest version
 R -e 'withr::with_libpaths(new = "/usr/share/R/rlib", devtools::install_github("markheckmann/OpenRepGrid.app", ref = "v0.2"))'
 
+### OpenRepGrid.app ###
+R -e 'devtools::install_github("markheckmann/OpenRepGrid.ic")'  # latest version
+
