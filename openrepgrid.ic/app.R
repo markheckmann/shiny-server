@@ -5,18 +5,17 @@ library(shiny)
 options(shiny.sanitize.errors = FALSE)
 package <- "OpenRepGrid.ic"
 rlib <- "/usr/share/R/rlib"
-  
+library(OpenRepGrid.ic)
+options(ic.login = TRUE)
+
 # add custom library with production version on top of libpath
 .libPaths(new = c(rlib, .libPaths()) )
 
 inst <- rownames(installed.packages())
 if (package %in% inst) {
-  # appDir <- system.file("shiny", package = package)
-  # setwd(appDir)
-  # shiny::shinyAppDir(".")
-  library(OpenRepGrid.ic)
-  options(ic.login = TRUE)
-  ic()
+  appDir <- system.file("shiny", package = package)
+  setwd(appDir)
+  shiny::shinyAppDir(".")
 } else {
   server <- function(input, output){}
     ui <- shiny::fluidPage(
