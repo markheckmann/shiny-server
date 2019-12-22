@@ -9,6 +9,10 @@
 #   sudo -i  # run as root on ubuntu
 #   /bin/bash ./deploy.sh
 
+# Also make sure that GITHUB_PAT environment var is set
+# (e.g. in .Renviron) to privat repos. github_install is smart
+# as it will use this var to access private repos.
+
 
 #-------------------------------------------------
 #           install shiny app packages
@@ -32,4 +36,8 @@ R -e 'withr::with_libpaths(new = "/usr/share/R/rlib", devtools::install_github("
 ### OpenRepGrid.app ###
 R -e 'devtools::install_github("markheckmann/OpenRepGrid.ic")'  # latest version
 R -e 'withr::with_libpaths(new = "/usr/share/R/rlib", devtools::install_github("markheckmann/OpenRepGrid.ic"))'
+
+### QuestorPro (private repo) ###
+R -e 'devtools::install_github("markheckmann/questorpro")'  # latest version
+R -e 'withr::with_libpaths(new = "/usr/share/R/rlib", devtools::install_github("markheckmann/questorpro"))'
 
